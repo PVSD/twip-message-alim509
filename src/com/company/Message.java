@@ -9,10 +9,9 @@ public class Message {
     public String name;
     public LocalDateTime time;
 
-    public Message(String m, ArrayList names, int j) {
+    public Message(String m, ArrayList names, int i) {
         message = m;
-        name = (String)names.get(j);
+        name = (String)names.get(i);
         time = LocalDateTime.now();
     }
-
 }

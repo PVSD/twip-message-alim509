@@ -1,5 +1,6 @@
 package com.company;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,37 +9,42 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Scanner texter = new Scanner(System.in);
         boolean exit = false;
         String message;
         ArrayList names = new ArrayList();
-        int counter = 0;
-        int j;
+        int counter = -1;
 
-        System.out.println("Enter in the names of the people in the chat. Type 'EXIT' to finish.");
-        while(!names.contains("EXIT")) {
-            names.add(sc.nextLine());
-            counter++;
-        }
-        names.remove(counter-1);
+        System.out.println("Enter in the your name.");
+        names.add(sc.nextLine());
+        System.out.println("Who would you like to text?");
+        names.add(sc.nextLine());
 
-        System.out.println("Be sure to enter in your corresponding number before typing.");
-        for(int i = 1; i <= names.size(); i++)
-            System.out.println("\n" + i + " - " + names.get(i-1));
-        System.out.println("\n");
+        System.out.println("\nType 'EXIT' to stop texting, 'RETRIEVE' to show all messages, 'SWITCH' to text another, or 'DELETE' to delete messages.");
 
         while(!exit) {
-            counter = texter.nextInt();
-            for(j = 0; j <= names.size(); j++) {
-                if(counter - 1 == j) {
-                    System.out.print("\n" + names.get(j) + ": ");
-                }
-            }
-            message = sc.nextLine();
-            System.out.println("\n");
-            //Message m = new Message(message, names, j);
-            //MessageList.add(m);
-        }
+            for(int i = 0; i < names.size(); i++) {
+                counter++;
+                System.out.print("\n" + names.get(i) + "[" + counter +"]: ");
+                message = sc.nextLine();
+                System.out.print("\t\t\t\t\t" + LocalDateTime.now());
+                System.out.println("\n");
+                if(message.equals("EXIT")) {
+                    exit = true;
+                } else if(message.equals("RETRIEVE")) {
+                    MessageList.allMsg();
+                } else if(message.equals("SWITCH")) {
+                    System.out.println("Who would you like to text?");
 
+                } else if(message.equals("DELETE")) {
+                    System.out.println("Type in the message index you would like to delete.");
+                    MessageList.msgList.remove(sc.nextInt());
+                }
+                Message m = new Message(message, names, i);
+                MessageList.add(m);
+            }
+
+            if(exit)
+                break;
+        }
     }
 }
